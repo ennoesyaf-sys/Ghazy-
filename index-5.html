@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Explorer B, Unit B, B6: Review and consolidation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F1FA; --surface:#FFFFFF; --ink:#241B35; --muted:#6B6080;
+  --plum:#5B2A86; --plum-soft:#EDE4F7; --on-plum:#FFFFFF;
+  --sun:#FFB020; --sun-soft:#FFF0CC;
+  --ok:#12805F; --ok-soft:#D6F2E7; --bad:#C23B47; --bad-soft:#FBE1E3;
+  --line:#DDD3EA;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16111F; --surface:#221A31; --ink:#F2EDF9; --muted:#AEA3C2;
+    --plum:#C3A0F5; --plum-soft:#34264D; --on-plum:#1B1228;
+    --sun:#FFC24D; --sun-soft:#40320F;
+    --ok:#5FD8B0; --ok-soft:#12372C; --bad:#FF8A93; --bad-soft:#40181D;
+    --line:#392E4F;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16111F; --surface:#221A31; --ink:#F2EDF9; --muted:#AEA3C2;
+  --plum:#C3A0F5; --plum-soft:#34264D; --on-plum:#1B1228;
+  --sun:#FFC24D; --sun-soft:#40320F;
+  --ok:#5FD8B0; --ok-soft:#12372C; --bad:#FF8A93; --bad-soft:#40181D;
+  --line:#392E4F;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--plum);outline-offset:2px}
+
+/* top bar with the sun track */
+.top{flex:none;padding:10px clamp(14px,3vw,40px) 6px}
+.titles{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:700;font-size:clamp(13px,1.3vw,18px);color:var(--muted)}
+.titles .meta{color:var(--plum)}
+.track{position:relative;height:30px;margin-top:4px}
+.track::before{content:"";position:absolute;left:0;right:0;top:14px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--sun),var(--plum))}
+.sun{position:absolute;top:3px;left:0;width:24px;height:24px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 5px var(--sun-soft);transition:left .5s ease,background .4s ease}
+.sun.night{background:var(--plum);box-shadow:0 0 0 5px var(--plum-soft)}
+
+/* deck */
+#deck{position:relative;flex:1;min-height:0}
+.slide{position:absolute;inset:0;overflow-y:auto;display:none;padding:clamp(10px,2vw,28px) clamp(16px,4vw,64px) 24px;font-size:clamp(17px,2vw,30px);line-height:1.4}
+.slide.active{display:block}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2{font-family:Fredoka,Nunito,system-ui,sans-serif;font-weight:600;margin:0;line-height:1.1}
+h1{font-size:clamp(34px,6vw,86px);color:var(--plum)}
+h2{font-size:clamp(26px,3.6vw,52px)}
+.head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.tag{background:var(--plum);color:var(--on-plum);font-weight:800;font-size:.6em;padding:.2em .75em;border-radius:999px}
+.task{margin:.5em 0 1em;color:var(--muted);font-weight:600;max-width:60ch}
+.lead{font-size:1.15em;max-width:32ch;margin:.6em 0 1em}
+.hint{color:var(--muted);font-weight:600;margin:.8em 0 0}
+
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:1em}
+.status{font-weight:800;color:var(--plum);min-width:12ch;flex:1 1 auto}
+.btn{background:var(--plum);color:var(--on-plum);border:0;border-radius:14px;padding:.6em 1.2em;font-weight:800;min-height:48px}
+.btn.ghost{background:transparent;color:var(--plum);border:2px solid var(--plum)}
+.btn:disabled{opacity:.4;cursor:default}
+
+/* agenda on the title slide */
+.agenda{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin-top:1.2em}
+.agenda button{display:flex;align-items:center;gap:12px;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:.7em 1em;min-height:60px;font-weight:700}
+.agenda button:hover{border-color:var(--plum)}
+.agenda .n{flex:none;width:2em;height:2em;display:grid;place-items:center;border-radius:50%;background:var(--plum-soft);color:var(--plum);font-weight:800}
+.agenda .m{margin-left:auto;color:var(--muted);font-weight:600;font-size:.8em;white-space:nowrap}
+
+/* activity 1 words */
+.words{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.word{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:1em .6em;font-family:Fredoka,Nunito,sans-serif;font-weight:500;font-size:1.25em;min-height:84px;transition:background .2s,border-color .2s}
+.word:hover{border-color:var(--plum)}
+.word.guessed{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);text-decoration:line-through}
+
+/* gap fill */
+.bank{display:flex;flex-wrap:wrap;gap:10px;padding:14px;border-radius:18px;background:var(--sun-soft);border:2px dashed var(--sun);margin-bottom:1em}
+.chip{background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:.35em .9em;font-weight:800;min-height:46px;transition:transform .15s}
+.chip:hover{border-color:var(--plum)}
+.chip.sel{background:var(--plum);color:var(--on-plum);border-color:var(--plum);transform:translateY(-3px)}
+.chip.used{opacity:.3;pointer-events:none}
+.sent{margin:0;padding-left:1.6em;list-style:upper-alpha;display:grid;gap:.55em}
+.sent li::marker{font-weight:800;color:var(--plum)}
+.para{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:1em 1.3em;max-width:70ch;line-height:2}
+.para p{margin:0 0 .6em}
+.gap{font:inherit;font-weight:800;min-width:4.6em;padding:0 .5em;border:0;border-bottom:3px dashed var(--plum);background:var(--plum-soft);color:var(--muted);border-radius:8px 8px 0 0;text-align:center;line-height:1.5}
+.gap.ok{border-bottom:3px solid var(--ok);background:var(--ok-soft);color:var(--ok);cursor:default}
+.gap.shown{border-bottom:3px solid var(--sun);background:var(--sun-soft);color:var(--ink);cursor:default}
+.gap.bad{border-bottom-color:var(--bad);background:var(--bad-soft);animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* circle the correct word */
+.circles{list-style:upper-alpha;margin:0;padding-left:1.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,470px),1fr));gap:.7em 2em}
+.circles li::marker{font-weight:800;color:var(--plum)}
+.circles .opts{display:inline-flex;gap:6px;margin:0 .3em;vertical-align:middle}
+.opt{background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:.1em .85em;font-weight:800;min-height:42px}
+.opt:hover{border-color:var(--plum)}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.why{display:block;font-size:.72em;color:var(--ok);font-weight:700;margin-top:.1em}
+
+/* tabs, rearrange, transform */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1em}
+.tab{min-width:52px;min-height:48px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-weight:800}
+.tab.cur{background:var(--plum);color:var(--on-plum);border-color:var(--plum)}
+.tab.done::after{content:" \2713";color:var(--ok)}
+.tab.cur.done::after{color:var(--on-plum)}
+.zone{min-height:92px;border:3px dashed var(--line);border-radius:18px;padding:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--surface)}
+.zone:empty::before{content:"Tap the words in the right order.";color:var(--muted);font-weight:600}
+.zone.good{border-color:var(--ok);background:var(--ok-soft);border-style:solid}
+.zone.nope{animation:shake .4s;border-color:var(--bad)}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin:1em 0;min-height:56px}
+.fb{font-weight:800;min-height:1.6em;color:var(--plum)}
+.fb.good{color:var(--ok)}
+.original{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.8em 1.1em;font-family:Fredoka,Nunito,sans-serif;font-size:1.3em}
+.tr-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:.9em}
+.tr-row .lab{flex:none;min-width:8.5em;font-weight:800;color:var(--plum)}
+.ans{flex:1 1 280px;background:var(--ok-soft);border:2px solid var(--ok);color:var(--ink);border-radius:14px;padding:.4em .9em;font-weight:700;animation:pop .25s}
+@keyframes pop{from{transform:scale(.96);opacity:0}to{transform:none;opacity:1}}
+
+/* weekend list */
+.seg{display:inline-flex;border:2px solid var(--plum);border-radius:14px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:.45em 1.1em;font-weight:800;color:var(--plum);min-height:46px}
+.seg button.cur{background:var(--plum);color:var(--on-plum)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;margin-top:1em}
+.col{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.8em 1em;min-height:150px}
+.col.cur{border-color:var(--plum)}
+.col h3{margin:0 0 .4em;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:1.1em}
+.col ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.col li{display:flex;align-items:center;gap:6px;background:var(--plum-soft);border-radius:999px;padding:.15em .3em .15em .9em;font-weight:700}
+.col li button{border:0;background:transparent;width:36px;height:36px;border-radius:50%;font-weight:800;color:var(--muted)}
+.col .empty{color:var(--muted);font-weight:600}
+.addrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:1em}
+.addrow input{flex:1 1 240px;font:inherit;padding:.5em .9em;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);min-height:48px}
+
+/* pair work */
+.talk{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px;align-items:start}
+.bubble{border-radius:18px;padding:.7em 1em;margin:0 0 .7em;max-width:34ch;font-weight:600}
+.bubble.a{background:var(--plum-soft)}
+.bubble.b{background:var(--sun-soft);margin-left:auto}
+.bubble b{display:block;font-size:.7em;color:var(--muted)}
+.clock{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1em 1.2em;text-align:center}
+.clock .who{font-weight:800;color:var(--plum)}
+.clock .time{font-family:Fredoka,Nunito,sans-serif;font-size:2.6em;line-height:1.1;font-weight:500}
+.clock.flash{animation:pop .3s;border-color:var(--sun)}
+.clock .btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:.5em}
+.topics{display:flex;flex-wrap:wrap;gap:8px;margin:.6em 0 0}
+.topics span{background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:.15em .8em;font-weight:700}
+
+/* backup tasks */
+.tabs .tab{padding:0 1em}
+.pick{display:flex;flex-wrap:wrap;gap:10px;margin:.4em 0 1em}
+.out{display:grid;gap:.6em;margin-top:1em}
+.out div{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:.5em 1em;font-family:Fredoka,Nunito,sans-serif;font-size:1.15em}
+.out .l{display:inline-block;min-width:7em;font-family:Nunito,system-ui,sans-serif;font-weight:800;font-size:.75em;color:var(--plum)}
+.rules{width:100%;border-collapse:collapse;margin-top:1.2em;font-size:.8em}
+.rules th,.rules td{border:2px solid var(--line);padding:.35em .7em;text-align:left;vertical-align:top}
+.rules th{background:var(--plum-soft);color:var(--plum)}
+.ladder{display:grid;gap:8px;margin:.5em 0 1em}
+.ladder div{display:flex;align-items:center;gap:12px}
+.ladder .w{flex:none;width:6em;font-weight:800}
+.ladder .bar{height:20px;border-radius:999px;background:linear-gradient(90deg,var(--sun),var(--plum));min-width:8px}
+.ladder .p{color:var(--muted);font-weight:700;font-size:.8em}
+.tfs{margin:0;padding-left:1.5em;display:grid;gap:.7em}
+.tfs li::marker{font-weight:800;color:var(--plum)}
+.tfs .opts{display:inline-flex;gap:6px;margin-left:.6em;vertical-align:middle}
+details.script{margin-top:1.2em;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:.3em 1em;font-size:.8em}
+details.script summary{font-weight:800;color:var(--plum);cursor:pointer;min-height:44px;display:flex;align-items:center}
+details.script p{margin:.2em 0}
+h3.sub{font-family:Fredoka,Nunito,system-ui,sans-serif;font-weight:600;font-size:1.1em;margin:1.2em 0 .2em}
+textarea.write{width:100%;min-height:190px;font:inherit;line-height:1.5;padding:.7em 1em;border:2px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);resize:vertical}
+.wc{font-weight:800;color:var(--muted)}
+.wc.good{color:var(--ok)}
+.check{list-style:none;padding:0;margin:.6em 0 0;display:grid;gap:6px}
+.check button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:2px solid var(--line);border-radius:12px;background:var(--surface);padding:.3em .8em;min-height:46px;font-weight:700}
+.check button::before{content:"";flex:none;width:1em;height:1em;border:2px solid var(--muted);border-radius:4px}
+.check button.on{border-color:var(--ok);background:var(--ok-soft)}
+.check button.on::before{background:var(--ok);border-color:var(--ok)}
+.model{background:var(--plum-soft);border-radius:16px;padding:.7em 1em;max-width:70ch;margin-top:.8em}
+.qcard{background:var(--sun-soft);border:2px solid var(--sun);border-radius:18px;padding:.7em 1em;font-family:Fredoka,Nunito,system-ui,sans-serif;font-size:1.3em;margin-bottom:.8em}
+.fu{list-style:none;padding:0;margin:0;display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))}
+.fu button{width:100%;text-align:left;border:2px solid var(--line);border-radius:12px;background:var(--surface);padding:.3em .9em;font-weight:700;min-height:46px}
+.fu button.asked{opacity:.45;text-decoration:line-through}
+
+/* bottom nav */
+.nav{flex:none;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:8px clamp(12px,3vw,40px) 10px;border-top:2px solid var(--line);background:var(--surface)}
+.nav .count{font-weight:800;min-width:5em;text-align:center}
+.nav .btn{padding:.4em 1.1em}
+.menu{position:absolute;left:50%;transform:translateX(-50%);bottom:72px;width:min(92vw,460px);max-height:60%;overflow-y:auto;background:var(--surface);border:2px solid var(--plum);border-radius:18px;padding:8px;z-index:5;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.menu button{display:flex;width:100%;gap:10px;text-align:left;border:0;background:transparent;border-radius:12px;padding:.5em .8em;font-weight:700;min-height:48px;align-items:center}
+.menu button:hover,.menu button[aria-current="true"]{background:var(--plum-soft)}
+.menu .tick{margin-left:auto;color:var(--ok)}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:560px){.nav .label{display:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="titles"><span>Explorer B, Unit B: I love Mondays!</span><span class="meta" id="meta"></span></div>
+  <div class="track" aria-hidden="true"><div class="sun" id="sun"></div></div>
+</header>
+
+<main id="deck">
+
+<!-- 0 Title -->
+<section class="slide" data-title="B6 Review and consolidation">
+  <div class="wrap">
+    <h1>B6 Review and consolidation</h1>
+    <p class="lead">Learning aim: to review what we learned in Unit B about daily routines.</p>
+    <div class="agenda" id="agenda"></div>
+  </div>
+</section>
+
+<!-- 1 Guess the words -->
+<section class="slide" data-title="Guess the words" data-min="5 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 1</span><h2>Guess the words</h2></div>
+    <p class="task">Describe one of the words below using your own actions. Your teacher will guess the word. Then swap.</p>
+    <div class="words" id="words"></div>
+    <div class="row">
+      <span class="status" id="wordsStatus" aria-live="polite"></span>
+      <button class="btn" id="actTimer" type="button">Start 30-second timer</button>
+      <button class="btn ghost" id="wordsReset" type="button">Reset</button>
+    </div>
+    <p class="hint">No talking. Take turns: you act and your teacher guesses, then swap. Tap a word when it is guessed.</p>
+  </div>
+</section>
+
+<!-- 2 Fill in the gaps (words) -->
+<section class="slide" data-title="Fill in the gaps: routine words" data-min="10 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 2</span><h2>Fill in the gaps</h2></div>
+    <p class="task">Use the words from Activity 1. Tap a word, then tap a gap.</p>
+    <div class="gapfill" id="gf2">
+      <div class="bank" aria-label="Word box"></div>
+      <ol class="sent">
+        <li>I <button class="gap" type="button" data-ans="wake up">&hellip;</button> at 7:00 AM every morning.</li>
+        <li>I <button class="gap" type="button" data-ans="go to office">&hellip;</button> from Monday to Friday to get a lot of money.</li>
+        <li>I clean my room <button class="gap" type="button" data-ans="every week">&hellip;</button>.</li>
+        <li>I <button class="gap" type="button" data-ans="commute">&hellip;</button> by bus to get to work.</li>
+        <li>I love to be healthy, I exercise <button class="gap" type="button" data-ans="every day">&hellip;</button>.</li>
+        <li>After waking up, I <button class="gap" type="button" data-ans="get up">&hellip;</button> out of bed.</li>
+        <li>I pay my bills <button class="gap" type="button" data-ans="every month">&hellip;</button>.</li>
+        <li>After work, I <button class="gap" type="button" data-ans="go home">&hellip;</button> and relax.</li>
+      </ol>
+      <div class="row">
+        <span class="status" aria-live="polite"></span>
+        <button class="btn ghost" type="button" data-act="show">Show answers</button>
+        <button class="btn ghost" type="button" data-act="reset">Start again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 Circle the correct word -->
+<section class="slide" data-title="Circle the correct word" data-min="10 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 3</span><h2>Circle the correct word</h2></div>
+    <p class="task">Complete the present simple tense sentences. Tap the correct word.</p>
+    <ol class="circles" id="circles"></ol>
+    <div class="row">
+      <span class="status" id="circleStatus" aria-live="polite"></span>
+      <button class="btn ghost" type="button" id="circleReset">Start again</button>
+    </div>
+  </div>
+</section>
+
+<!-- 4 Fill in the gaps (Farhana) -->
+<section class="slide" data-title="Fill in the gaps: Farhana" data-min="10 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 4</span><h2>Farhana's schedule</h2></div>
+    <p class="task">Fill in the gaps with words from the box.</p>
+    <div class="gapfill" id="gf4">
+      <div class="bank" aria-label="Word box"></div>
+      <div class="para">
+        <p>Farhana has a very organised schedule. She <button class="gap" type="button" data-n="1" data-ans="wakes up">1</button> at 6:30 AM every day. First, she <button class="gap" type="button" data-n="2" data-ans="brushes">2</button> her teeth and <button class="gap" type="button" data-n="3" data-ans="washes">3</button> her face. After that, she <button class="gap" type="button" data-n="4" data-ans="has">4</button> a quick breakfast, usually cereal and milk.</p>
+        <p>But at weekends, Farhana <button class="gap" type="button" data-n="5" data-ans="doesn't go">5</button> to work. Instead, she <button class="gap" type="button" data-n="6" data-ans="relaxes">6</button> at home. She <button class="gap" type="button" data-n="7" data-ans="doesn't have">7</button> any meetings or deadlines. On Saturdays, she often <button class="gap" type="button" data-n="8" data-ans="watches">8</button> movies or <button class="gap" type="button" data-n="9" data-ans="reads">9</button> books.</p>
+        <p><button class="gap" type="button" data-n="10" data-ans="Do">10</button> you also have a daily routine? <button class="gap" type="button" data-n="11" data-ans="Do">11</button> you wake up early like Farhana? <button class="gap" type="button" data-n="12" data-ans="Do">12</button> you have breakfast before starting your day? <button class="gap" type="button" data-n="13" data-ans="Do">13</button> you go to work at weekends? Let us know!</p>
+      </div>
+      <div class="row">
+        <span class="status" aria-live="polite"></span>
+        <button class="btn ghost" type="button" data-act="show">Show answers</button>
+        <button class="btn ghost" type="button" data-act="reset">Start again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 Rearrange -->
+<section class="slide" data-title="Rearrange the words" data-min="10 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 5</span><h2>Rearrange the words</h2></div>
+    <p class="task">Make a complete sentence. Tap the words in order. Tap a word in the top box to move it back.</p>
+    <div class="tabs" id="reTabs"></div>
+    <div class="zone" id="reBuilt"></div>
+    <div class="pool" id="rePool"></div>
+    <div class="fb" id="reFb" aria-live="polite"></div>
+    <div class="row">
+      <button class="btn ghost" type="button" id="reShow">Show answer</button>
+      <button class="btn ghost" type="button" id="reReset">Start again</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6 Transform -->
+<section class="slide" data-title="Transform the sentences" data-min="10 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 6</span><h2>Transform the sentences</h2></div>
+    <p class="task">Change each sentence. Say it or write it first, then tap Show to check.</p>
+    <div class="tabs" id="trTabs"></div>
+    <div class="original" id="trOriginal"></div>
+    <div id="trRows"></div>
+  </div>
+</section>
+
+<!-- 7 Weekend list -->
+<section class="slide" data-title="My favourite weekend activities" data-min="5 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 7</span><h2>My favourite weekend activities</h2></div>
+    <p class="task">List your favourite weekend activities. Think about your routine and your family's routine.</p>
+    <div class="seg" role="group" aria-label="Add to">
+      <button type="button" data-t="me" class="cur">Add to me</button>
+      <button type="button" data-t="fam">Add to my family</button>
+    </div>
+    <div class="topics" id="ideas" style="margin-top:.8em"></div>
+    <div class="addrow">
+      <input id="listInput" type="text" placeholder="Type your own activity" autocomplete="off">
+      <button class="btn" type="button" id="listAdd">Add</button>
+      <button class="btn ghost" type="button" id="listClear">Clear lists</button>
+    </div>
+    <div class="cols" id="cols"></div>
+  </div>
+</section>
+
+<!-- 8 Pair work -->
+<section class="slide" data-title="Talk about your daily routine" data-min="20 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Activity 8</span><h2>Talk with your teacher</h2></div>
+    <p class="task">Talk with your teacher about your daily routine and your family's daily routine. Take turns.</p>
+    <div class="talk">
+      <div>
+        <p class="bubble a"><b>Teacher</b>I wake up at 7 a.m. After I wake up, I help my mum prepare breakfast.</p>
+        <p class="bubble b"><b>Student</b>That's nice. My mum does the cooking in our house. After breakfast, I get ready for school. How about you?</p>
+        <div class="topics" aria-label="Topics">
+          <span>Waking up times</span><span>Meals</span><span>School or work</span><span>Evening activities</span>
+        </div>
+      </div>
+      <div class="clock" id="clock">
+        <div class="who" id="who">Student is speaking</div>
+        <div class="time" id="time">1:00</div>
+        <div class="btns">
+          <button class="btn" type="button" id="tGo">Start</button>
+          <button class="btn ghost" type="button" id="tSwap">Switch speaker</button>
+          <button class="btn ghost" type="button" id="tReset">Reset</button>
+        </div>
+        <div class="btns" role="group" aria-label="Time per turn">
+          <button class="btn ghost" type="button" data-s="60">1:00</button>
+          <button class="btn ghost" type="button" data-s="90">1:30</button>
+          <button class="btn ghost" type="button" data-s="120">2:00</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Backup divider -->
+<section class="slide" id="backupSlide" data-title="Backup tasks" data-min="">
+  <div class="wrap">
+    <h1>Backup tasks</h1>
+    <p class="lead">Extra practice on the same theme. Pick what fits the time you have left.</p>
+    <div class="agenda" id="backupAgenda"></div>
+  </div>
+</section>
+
+<!-- Backup A: grammar recap -->
+<section class="slide" data-backup="1" data-title="Present simple recap" data-min="8 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Backup A</span><h2>Present simple recap</h2></div>
+    <p class="task">Pick a subject and a verb. See how the sentence changes. Then say your own sentence.</p>
+    <div class="pick" id="gSubj" aria-label="Subject"></div>
+    <div class="pick" id="gVerb" aria-label="Verb"></div>
+    <div class="out" id="gOut" aria-live="polite"></div>
+    <table class="rules">
+      <thead><tr><th>The verb</th><th>With he, she, it</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>Most verbs</td><td>add -s</td><td>wake up, wakes up; read, reads</td></tr>
+        <tr><td>Ends in -o, -ch, -sh, -s, -x</td><td>add -es</td><td>go, goes; watch, watches; brush, brushes</td></tr>
+        <tr><td>have</td><td>has</td><td>She has breakfast at 7.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Backup B: spot the mistake -->
+<section class="slide" data-backup="1" data-title="Spot the mistake" data-min="5 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Backup B</span><h2>Spot the mistake</h2></div>
+    <p class="task">Each sentence has one mistake. Find it and fix it. Then tap Show to check.</p>
+    <div id="misList"></div>
+  </div>
+</section>
+
+<!-- Backup C: how often -->
+<section class="slide" data-backup="1" data-title="How often?" data-min="5 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Backup C</span><h2>How often?</h2></div>
+    <p class="task">These words tell us how often we do things. Put them before the main verb: I usually wake up early.</p>
+    <div class="ladder" aria-hidden="true">
+      <div><span class="w">always</span><span class="bar" style="width:100%"></span><span class="p">100%</span></div>
+      <div><span class="w">usually</span><span class="bar" style="width:80%"></span><span class="p">80%</span></div>
+      <div><span class="w">often</span><span class="bar" style="width:60%"></span><span class="p">60%</span></div>
+      <div><span class="w">sometimes</span><span class="bar" style="width:30%"></span><span class="p">30%</span></div>
+      <div><span class="w">never</span><span class="bar" style="width:1%"></span><span class="p">0%</span></div>
+    </div>
+    <div class="gapfill" id="gfFreq">
+      <div class="bank" aria-label="Word box"></div>
+      <ol class="sent">
+        <li>I <button class="gap" type="button" data-ans="always">&hellip;</button> brush my teeth after breakfast. (100%)</li>
+        <li>She <button class="gap" type="button" data-ans="usually">&hellip;</button> takes the bus to school. (80%)</li>
+        <li>We <button class="gap" type="button" data-ans="often">&hellip;</button> eat out at weekends. (60%)</li>
+        <li>He <button class="gap" type="button" data-ans="sometimes">&hellip;</button> plays football on Sunday. (30%)</li>
+        <li>They <button class="gap" type="button" data-ans="never">&hellip;</button> wake up after noon. (0%)</li>
+      </ol>
+      <div class="row">
+        <span class="status" aria-live="polite"></span>
+        <button class="btn ghost" type="button" data-act="show">Show answers</button>
+        <button class="btn ghost" type="button" data-act="reset">Start again</button>
+      </div>
+    </div>
+    <p class="hint">Now make three true sentences about your own week.</p>
+  </div>
+</section>
+
+<!-- Backup D: listening -->
+<section class="slide" data-backup="1" data-title="Listening: Tom and Lisa" data-min="10 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Backup D</span><h2>Listening: Tom and Lisa</h2></div>
+    <p class="task">Listen to the conversation again (Lesson 1, Activity 2). Is each sentence true or false?</p>
+    <ol class="tfs" id="tfList"></ol>
+    <div class="row"><span class="status" id="tfStatus" aria-live="polite"></span><button class="btn ghost" type="button" id="tfReset">Start again</button></div>
+    <h3 class="sub">Questions</h3>
+    <div id="qaList"></div>
+    <details class="script">
+      <summary>Show the script</summary>
+      <p><b>Tom:</b> What time do you usually wake up in the morning, Lisa?</p>
+      <p><b>Lisa:</b> I usually wake up at 7:00 a.m. How about you?</p>
+      <p><b>Tom:</b> I wake up at 6:30 a.m. What's the first thing you do when you wake up?</p>
+      <p><b>Lisa:</b> I go to the bathroom to wash my face and brush my teeth. What about you?</p>
+      <p><b>Tom:</b> I do the same! Then I have breakfast. I like cereal with milk.</p>
+      <p><b>Lisa:</b> Oh, I have toast and jam for breakfast. What do you do after breakfast?</p>
+      <p><b>Tom:</b> I get dressed for work and leave at 8:00 a.m.</p>
+      <p><b>Lisa:</b> I leave at 8:30 a.m. to catch the bus to the office. How do you go to work?</p>
+      <p><b>Tom:</b> I drive my car to work. It's easier for me.</p>
+      <p><b>Lisa:</b> That's nice. I take the bus because I don't have a car. Do you have a busy day at work?</p>
+      <p><b>Tom:</b> Yes, sometimes it's busy, but I enjoy my job. How about you?</p>
+      <p><b>Lisa:</b> My job is busy too, but I like it. I finish work at 5:00 p.m.</p>
+      <p><b>Tom:</b> That's the same time I finish. After work, I usually go to the gym.</p>
+      <p><b>Lisa:</b> I just go home after work and relax by watching TV.</p>
+      <p><b>Tom:</b> I watch TV too, but later in the evening.</p>
+    </details>
+  </div>
+</section>
+
+<!-- Backup E: speaking -->
+<section class="slide" data-backup="1" data-title="Speaking: interview" data-min="10 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Backup E</span><h2>Speaking: interview</h2></div>
+    <p class="task">Choose a topic. The student asks the questions and the teacher answers. Then swap.</p>
+    <div class="tabs" id="spTabs"></div>
+    <div class="qcard" id="spQ"></div>
+    <ul class="fu" id="spList"></ul>
+    <p class="hint">Last step: tell it back with he or she. For example: My teacher gets up at five.</p>
+  </div>
+</section>
+
+<!-- Backup F: writing -->
+<section class="slide" data-backup="1" data-title="Writing: daily routines" data-min="15 minutes">
+  <div class="wrap">
+    <div class="head"><span class="tag">Backup F</span><h2>Writing: daily routines</h2></div>
+    <div class="tabs" id="wrTabs" style="margin-top:.6em"></div>
+    <p class="task" id="wrPrompt"></p>
+    <div class="row" style="margin-top:0"><button class="btn ghost" type="button" id="wrModelBtn">Show model</button></div>
+    <div class="model" id="wrModel" hidden></div>
+    <div class="pick" id="wrWords" style="margin-top:.8em" aria-label="Useful words"></div>
+    <textarea class="write" id="wrText" aria-label="Your writing" placeholder="Write here"></textarea>
+    <div class="row" style="margin-top:.4em"><span class="wc" id="wrCount"></span></div>
+    <ul class="check" id="wrCheck"></ul>
+    <p class="hint">When you finish, read your paragraph aloud to your teacher.</p>
+  </div>
+</section>
+
+<!-- 9 Close -->
+<section class="slide" data-title="Well done" data-min="">
+  <div class="wrap">
+    <h1>Well done!</h1>
+    <p class="lead">One last turn: say one sentence about your routine and one about your family's routine.</p>
+    <div class="row"><button class="btn" type="button" id="restart">Back to the start</button></div>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav" aria-label="Slides">
+  <div class="menu" id="menu" hidden></div>
+  <button class="btn" type="button" id="prev"><span aria-hidden="true">&larr;</span> <span class="label">Back</span></button>
+  <span class="count" id="count"></span>
+  <button class="btn ghost" type="button" id="menuBtn" aria-expanded="false">Slides</button>
+  <button class="btn ghost" type="button" id="fs">Full screen</button>
+  <button class="btn" type="button" id="next"><span class="label">Next</span> <span aria-hidden="true">&rarr;</span></button>
+</nav>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t}return b}
+function beep(){try{var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;var ac=new AC(),o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=880;g.gain.setValueAtTime(0.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.6);o.start();o.stop(ac.currentTime+0.6)}catch(e){}}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+var LETTERS="ABCDEFGHIJ";
+
+/* ---------- deck navigation ---------- */
+var slides=$$(".slide"),cur=0,visited={0:true};
+function buildMenu(){
+  var m=$("#menu");m.innerHTML="";
+  slides.forEach(function(s,i){
+    var b=el("button",null,s.dataset.title);b.type="button";
+    if(i===cur)b.setAttribute("aria-current","true");
+    if(visited[i]&&i!==cur){b.appendChild(el("span","tick","\u2713"))}
+    b.addEventListener("click",function(){go(i);toggleMenu(false)});
+    m.appendChild(b);
+  });
+}
+function toggleMenu(open){
+  var m=$("#menu"),btn=$("#menuBtn");
+  if(open===undefined)open=m.hidden;
+  m.hidden=!open;btn.setAttribute("aria-expanded",String(open));
+  if(open)buildMenu();
+}
+function go(n){
+  cur=Math.max(0,Math.min(slides.length-1,n));visited[cur]=true;
+  slides.forEach(function(s,i){s.classList.toggle("active",i===cur)});
+  slides[cur].scrollTop=0;
+  var s=slides[cur];
+  $("#meta").textContent=cur===0||cur===slides.length-1?"":s.dataset.title+(s.dataset.min?" ("+s.dataset.min+")":"");
+  $("#count").textContent=(cur+1)+" / "+slides.length;
+  $("#prev").disabled=cur===0;$("#next").disabled=cur===slides.length-1;
+  var sun=$("#sun");sun.style.left="calc((100% - 24px) * "+(cur/(slides.length-1))+")";
+  sun.classList.toggle("night",cur===slides.length-1);
+}
+$("#prev").addEventListener("click",function(){go(cur-1)});
+$("#next").addEventListener("click",function(){go(cur+1)});
+$("#menuBtn").addEventListener("click",function(){toggleMenu()});
+$("#restart").addEventListener("click",function(){go(0)});
+$("#fs").addEventListener("click",function(){
+  try{
+    var p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+    if(p&&p.catch)p.catch(function(){});
+  }catch(e){}
+});
+document.addEventListener("keydown",function(e){
+  var t=e.target&&e.target.tagName;
+  if(t==="INPUT"||t==="TEXTAREA")return;
+  if(e.key==="ArrowRight"||e.key==="PageDown")go(cur+1);
+  else if(e.key==="ArrowLeft"||e.key==="PageUp")go(cur-1);
+  else if(e.key==="Escape")toggleMenu(false);
+});
+
+/* agenda */
+(function(){
+  var box=$("#agenda");
+  slides.forEach(function(s,i){
+    if(i<1||i>8)return;
+    var b=el("button");b.type="button";
+    b.appendChild(el("span","n",String(i)));
+    b.appendChild(el("span",null,s.dataset.title));
+    b.appendChild(el("span","m",s.dataset.min.replace(" minutes"," min")));
+    b.addEventListener("click",function(){go(i)});
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- Activity 1: guess the words ---------- */
+var WORDS=["wake up","get up","go to office","commute","go home","every day","every week","every month"];
+function countWords(){$("#wordsStatus").textContent="Guessed "+$$("#words .guessed").length+" of "+WORDS.length}
+function renderWords(){
+  var box=$("#words");box.innerHTML="";
+  WORDS.forEach(function(w){
+    var b=el("button","word",w);b.type="button";b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",function(){var on=b.classList.toggle("guessed");b.setAttribute("aria-pressed",String(on));countWords()});
+    box.appendChild(b);
+  });
+  countWords();
+}
+$("#wordsReset").addEventListener("click",renderWords);
+var actI=null;
+$("#actTimer").addEventListener("click",function(){
+  var btn=this;
+  if(actI){clearInterval(actI);actI=null;btn.textContent="Start 30-second timer";return}
+  var s=30;btn.textContent="Stop ("+s+")";
+  actI=setInterval(function(){
+    s--;
+    if(s<=0){clearInterval(actI);actI=null;btn.textContent="Time is up! Start again";beep()}
+    else btn.textContent="Stop ("+s+")";
+  },1000);
+});
+
+/* ---------- Gap fill engine (Activities 2 and 4) ---------- */
+function initGapfill(root){
+  var gaps=$$(".gap",root),bank=$(".bank",root),status=$(".status",root);
+  var selected=null,correct=0;
+  function say(t){status.textContent=t}
+  function summary(){
+    say(correct===gaps.length?"All correct! Read it aloud together.":correct+" of "+gaps.length+" correct")
+  }
+  function reset(){
+    bank.innerHTML="";selected=null;correct=0;
+    shuffle(gaps.map(function(g){return g.dataset.ans})).forEach(function(w){
+      var b=el("button","chip",w);b.type="button";
+      b.addEventListener("click",function(){
+        if(b.classList.contains("used"))return;
+        if(selected===b){b.classList.remove("sel");selected=null;return}
+        if(selected)selected.classList.remove("sel");
+        selected=b;b.classList.add("sel");say("Now tap the gap.");
+      });
+      bank.appendChild(b);
+    });
+    gaps.forEach(function(g){g.className="gap";g.textContent=g.dataset.n||"\u2026"});
+    say("Pick a word, then tap a gap.");
+  }
+  gaps.forEach(function(g){
+    g.addEventListener("click",function(){
+      if(g.classList.contains("ok")||g.classList.contains("shown"))return;
+      if(!selected){say("Pick a word from the box first.");return}
+      if(selected.textContent===g.dataset.ans){
+        g.textContent=g.dataset.ans;g.classList.add("ok");
+        selected.classList.remove("sel");selected.classList.add("used");selected.disabled=true;selected=null;
+        correct++;summary();
+      }else{
+        g.classList.add("bad");setTimeout(function(){g.classList.remove("bad")},600);
+        say("Not quite. Try another word.");
+      }
+    });
+  });
+  $('[data-act="reset"]',root).addEventListener("click",reset);
+  $('[data-act="show"]',root).addEventListener("click",function(){
+    gaps.forEach(function(g){
+      if(!g.classList.contains("ok")){g.textContent=g.dataset.ans;g.classList.add("shown")}
+    });
+    $$(".chip",root).forEach(function(c){c.classList.add("used")});
+    say("Answers shown. Read the sentences aloud.");
+  });
+  reset();
+}
+initGapfill($("#gf2"));
+initGapfill($("#gf4"));
+
+/* ---------- Activity 3: circle the correct word ---------- */
+var CIRCLE=[
+  ["The",["cats","cat"],0,"are playing in the garden.","Cats is plural, so we say are playing."],
+  ["I have two",["brothers","brother"],0,".","Two means more than one, so brothers."],
+  ["She",["watches","watch"],0,"TV every evening.","She is singular, so the verb ends in -es."],
+  ["The",["dog","dogs"],0,"barks loudly.","One dog barks. The verb has -s, so the noun is singular."],
+  ["My",["friend","friends"],1,"come over for dinner.","Come has no -s, so the subject is plural."],
+  ["He",["reads","read"],0,"a book every night.","He is singular, so reads."],
+  ["The",["child","children"],1,"play at the park every Saturday.","Play has no -s, so the subject is plural."],
+  ["We",["eat","eats"],0,"lunch at noon.","We takes the base verb."],
+  ["The",["apple","apples"],1,"are red and delicious.","Are shows the subject is plural."],
+  ["She",["has","have"],0,"a beautiful garden.","She takes has."]
+];
+var circleScore=0;
+function renderCircles(){
+  var ol=$("#circles");ol.innerHTML="";circleScore=0;
+  CIRCLE.forEach(function(it){
+    var li=el("li");
+    li.appendChild(document.createTextNode(it[0]+" "));
+    var opts=el("span","opts");
+    it[1].forEach(function(o,idx){
+      var b=el("button","opt",o);b.type="button";
+      b.addEventListener("click",function(){
+        if(li.classList.contains("done"))return;
+        if(idx===it[2]){
+          b.classList.add("ok");li.classList.add("done");why.hidden=false;circleScore++;updateCircle();
+        }else{b.classList.add("bad");b.disabled=true}
+      });
+      opts.appendChild(b);
+    });
+    li.appendChild(opts);
+    li.appendChild(document.createTextNode(" "+it[3]));
+    var why=el("span","why",it[4]);why.hidden=true;li.appendChild(why);
+    ol.appendChild(li);
+  });
+  updateCircle();
+}
+function updateCircle(){
+  $("#circleStatus").textContent=circleScore===CIRCLE.length?"All 10 correct!":circleScore+" of "+CIRCLE.length+" correct";
+}
+$("#circleReset").addEventListener("click",renderCircles);
+
+/* ---------- Activity 5: rearrange ---------- */
+var RE=[
+  {t:["They","their","before","children","school.","have","breakfast","with"],o:[0,5,6,7,1,3,2,4]},
+  {t:["you","usually","play","video games","in the","evening?","Do"],o:[6,0,1,2,3,4,5]},
+  {t:["clean","They","the","house","at","weekends.","usually"],o:[1,6,0,2,3,4,5]},
+  {t:["read","books","doesn't","every","night.","She"],o:[5,2,0,1,3,4]},
+  {t:["play","football","he","in","the","park","every","Saturday?","Does"],o:[8,2,0,1,3,4,5,6,7]}
+];
+var rs=[],rCur=0;
+function sameOrder(a,b){return a.join()===b.join()}
+function initRe(){
+  rs=RE.map(function(it){
+    var idx=it.t.map(function(_,i){return i}),p=shuffle(idx);
+    while(sameOrder(p,it.o))p=shuffle(idx);
+    return {pool:p,built:[],done:false,msg:""};
+  });
+  rCur=0;renderRe();
+}
+function answerText(i){return RE[i].o.map(function(x){return RE[i].t[x]}).join(" ")}
+function renderRe(){
+  var tabs=$("#reTabs");tabs.innerHTML="";
+  RE.forEach(function(_,i){
+    var b=el("button","tab"+(i===rCur?" cur":"")+(rs[i].done?" done":""),LETTERS[i]);b.type="button";
+    b.addEventListener("click",function(){rCur=i;renderRe()});
+    tabs.appendChild(b);
+  });
+  var st=rs[rCur],it=RE[rCur],built=$("#reBuilt"),pool=$("#rePool"),fb=$("#reFb");
+  built.innerHTML="";pool.innerHTML="";
+  built.className="zone"+(st.done?" good":"");
+  st.built.forEach(function(ix){
+    var c=el("button","chip",it.t[ix]);c.type="button";
+    c.addEventListener("click",function(){
+      if(st.done)return;
+      st.built=st.built.filter(function(x){return x!==ix});st.pool.push(ix);st.msg="";renderRe();
+    });
+    built.appendChild(c);
+  });
+  st.pool.forEach(function(ix){
+    var c=el("button","chip",it.t[ix]);c.type="button";
+    c.addEventListener("click",function(){
+      if(st.done)return;
+      st.pool=st.pool.filter(function(x){return x!==ix});st.built.push(ix);
+      if(st.built.length===it.t.length){
+        var ok=st.built.map(function(x){return it.t[x]}).join(" ")===answerText(rCur);
+        if(ok){st.done=true;st.msg="Correct! Read it aloud."}
+        else{st.msg="Not yet. Tap a word in the top box to move it back.";renderRe();built.classList.add("nope");return}
+      }else st.msg="";
+      renderRe();
+    });
+    pool.appendChild(c);
+  });
+  fb.textContent=st.msg;fb.className="fb"+(st.done?" good":"");
+}
+$("#reShow").addEventListener("click",function(){
+  var st=rs[rCur];st.built=RE[rCur].o.slice();st.pool=[];st.done=true;st.msg="Answer: "+answerText(rCur);renderRe();
+});
+$("#reReset").addEventListener("click",initRe);
+
+/* ---------- Activity 6: transform ---------- */
+var TR=[
+  {s:"John wakes up early every morning.",a:[["Negative","John doesn't wake up early every morning."],["Interrogative","Does John wake up early every morning?"]]},
+  {s:"Do they do homework every day?",a:[["Negative","They don't do homework every day."],["Affirmative","They do homework every day."]]},
+  {s:"My mother doesn't like spicy food.",a:[["Interrogative","Does my mother like spicy food?"],["Affirmative","My mother likes spicy food."]]},
+  {s:"He teaches English at the university.",a:[["Negative","He doesn't teach English at the university."],["Interrogative","Does he teach English at the university?"]]},
+  {s:"Does it rain a lot in your town?",a:[["Negative","It doesn't rain a lot in your town."],["Affirmative","It rains a lot in your town."]]}
+];
+var trCur=0,trSeen={};
+function renderTr(){
+  var tabs=$("#trTabs");tabs.innerHTML="";
+  TR.forEach(function(_,i){
+    var b=el("button","tab"+(i===trCur?" cur":""),LETTERS[i]);b.type="button";
+    b.addEventListener("click",function(){trCur=i;renderTr()});tabs.appendChild(b);
+  });
+  $("#trOriginal").textContent=TR[trCur].s;
+  var rows=$("#trRows");rows.innerHTML="";
+  TR[trCur].a.forEach(function(pair,k){
+    var key=trCur+"-"+k,row=el("div","tr-row");
+    row.appendChild(el("span","lab",pair[0]+" form"));
+    var ans=el("span","ans",pair[1]);
+    var btn=el("button","btn ghost",trSeen[key]?"Hide":"Show");btn.type="button";
+    ans.hidden=!trSeen[key];
+    btn.addEventListener("click",function(){
+      trSeen[key]=!trSeen[key];ans.hidden=!trSeen[key];btn.textContent=trSeen[key]?"Hide":"Show";
+    });
+    row.appendChild(btn);row.appendChild(ans);rows.appendChild(row);
+  });
+}
+
+/* ---------- Activity 7: weekend lists ---------- */
+var IDEAS=["play football","go hiking","visit grandparents","watch TV","clean the house","go to the park","cook together","ride a bike"];
+var lists={me:[],fam:[]},target="me";
+function renderLists(){
+  var cols=$("#cols");cols.innerHTML="";
+  [["me","Me"],["fam","My family"]].forEach(function(p){
+    var c=el("div","col"+(target===p[0]?" cur":""));
+    c.appendChild(el("h3",null,p[1]));
+    var ul=el("ul");
+    if(!lists[p[0]].length)ul.appendChild(el("li","empty","Nothing yet"));
+    lists[p[0]].forEach(function(item,i){
+      var li=el("li",null,item);
+      var x=el("button",null,"\u00D7");x.type="button";x.setAttribute("aria-label","Remove "+item);
+      x.addEventListener("click",function(){lists[p[0]].splice(i,1);renderLists()});
+      li.appendChild(x);ul.appendChild(li);
+    });
+    c.appendChild(ul);cols.appendChild(c);
+  });
+  $$(".empty",cols).forEach(function(e){e.style.background="transparent";e.style.color="var(--muted)"});
+}
+function addItem(text){
+  text=(text||"").replace(/^\s+|\s+$/g,"");
+  if(!text)return;
+  if(lists[target].indexOf(text)===-1)lists[target].push(text);
+  renderLists();
+}
+(function(){
+  var box=$("#ideas");
+  IDEAS.forEach(function(t){
+    var b=el("button","chip",t);b.type="button";
+    b.addEventListener("click",function(){addItem(t)});box.appendChild(b);
+  });
+  $$(".seg button").forEach(function(b){
+    b.addEventListener("click",function(){
+      target=b.dataset.t;$$(".seg button").forEach(function(x){x.classList.toggle("cur",x===b)});renderLists();
+    });
+  });
+  $("#listAdd").addEventListener("click",function(){var i=$("#listInput");addItem(i.value);i.value="";i.focus()});
+  $("#listInput").addEventListener("keydown",function(e){if(e.key==="Enter"){addItem(this.value);this.value=""}});
+  $("#listClear").addEventListener("click",function(){lists={me:[],fam:[]};renderLists()});
+})();
+
+/* ---------- Activity 8: speaking timer ---------- */
+var tTotal=60,tLeft=60,tTimer=null,speaker="A";
+function fmt(s){return Math.floor(s/60)+":"+("0"+(s%60)).slice(-2)}
+function drawTimer(){
+  $("#time").textContent=fmt(tLeft);
+  $("#who").textContent=(speaker==="A"?"Student":"Teacher")+" is speaking";
+  $("#tGo").textContent=tTimer?"Pause":"Start";
+}
+function stopTimer(){if(tTimer){clearInterval(tTimer);tTimer=null}}
+$("#tGo").addEventListener("click",function(){
+  if(tTimer){stopTimer();drawTimer();return}
+  if(tLeft<=0)tLeft=tTotal;
+  tTimer=setInterval(function(){
+    tLeft--;
+    if(tLeft<=0){
+      stopTimer();tLeft=0;beep();
+      var c=$("#clock");c.classList.remove("flash");void c.offsetWidth;c.classList.add("flash");
+      speaker=speaker==="A"?"B":"A";tLeft=tTotal;
+    }
+    drawTimer();
+  },1000);
+  drawTimer();
+});
+$("#tSwap").addEventListener("click",function(){stopTimer();speaker=speaker==="A"?"B":"A";tLeft=tTotal;drawTimer()});
+$("#tReset").addEventListener("click",function(){stopTimer();speaker="A";tLeft=tTotal;drawTimer()});
+$$("[data-s]").forEach(function(b){
+  b.addEventListener("click",function(){stopTimer();tTotal=parseInt(b.dataset.s,10);tLeft=tTotal;drawTimer()});
+});
+
+/* ---------- Backup tasks ---------- */
+(function(){
+  var idx=0;
+  slides.forEach(function(s,i){if(s.id==="backupSlide")idx=i});
+  var box=$("#backupAgenda");
+  slides.forEach(function(s,i){
+    if(!s.dataset.backup)return;
+    var b=el("button");b.type="button";
+    b.appendChild(el("span","n",String.fromCharCode(65+box.children.length)));
+    b.appendChild(el("span",null,s.dataset.title));
+    b.appendChild(el("span","m",s.dataset.min.replace(" minutes"," min")));
+    b.addEventListener("click",function(){go(i)});
+    box.appendChild(b);
+  });
+  var ab=el("button");ab.type="button";
+  ab.appendChild(el("span","n","+"));
+  ab.appendChild(el("span",null,"Backup tasks"));
+  ab.appendChild(el("span","m","extra"));
+  ab.addEventListener("click",function(){go(idx)});
+  $("#agenda").appendChild(ab);
+})();
+
+/* A: present simple recap */
+var G_SUBJ=["I","you","we","they","he","she","it"];
+var G_VERBS=[["wake up","wakes up"],["get up","gets up"],["commute","commutes"],["go","goes"],["have","has"],["watch","watches"],["brush","brushes"],["relax","relaxes"]];
+var gS=4,gV=0;
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function renderGram(){
+  var sb=$("#gSubj"),vb=$("#gVerb"),out=$("#gOut");
+  sb.innerHTML="";vb.innerHTML="";out.innerHTML="";
+  G_SUBJ.forEach(function(s,i){
+    var b=el("button","chip"+(i===gS?" sel":""),s);b.type="button";
+    b.addEventListener("click",function(){gS=i;renderGram()});sb.appendChild(b);
+  });
+  G_VERBS.forEach(function(v,i){
+    var b=el("button","chip"+(i===gV?" sel":""),v[0]);b.type="button";
+    b.addEventListener("click",function(){gV=i;renderGram()});vb.appendChild(b);
+  });
+  var s=G_SUBJ[gS],third=gS>=4,base=G_VERBS[gV][0],s3=G_VERBS[gV][1];
+  [["Positive",cap(s)+" "+(third?s3:base)+" every day."],
+   ["Negative",cap(s)+" "+(third?"doesn't":"don't")+" "+base+" every day."],
+   ["Question",(third?"Does":"Do")+" "+s+" "+base+" every day?"],
+   ["Short answers","Yes, "+s+" "+(third?"does":"do")+". No, "+s+" "+(third?"doesn't":"don't")+"."]
+  ].forEach(function(r){
+    var d=el("div");d.appendChild(el("span","l",r[0]));d.appendChild(document.createTextNode(r[1]));out.appendChild(d);
+  });
+}
+
+/* B: spot the mistake */
+var MIS=[
+  ["She wake up at 6:30 every day.","She wakes up at 6:30 every day.","He, she and it take -s."],
+  ["He don't go to work on Sundays.","He doesn't go to work on Sundays.","With he, she and it we use doesn't."],
+  ["Do your mother cook dinner?","Does your mother cook dinner?","Your mother is she, so we use Does."],
+  ["They watches TV in the evening.","They watch TV in the evening.","With they, the verb has no -s."],
+  ["I goes to school by bus.","I go to school by bus.","With I, the verb has no -s."],
+  ["My brother play football every Saturday.","My brother plays football every Saturday.","My brother is he, so plays."]
+];
+function renderMis(){
+  var box=$("#misList");box.innerHTML="";
+  MIS.forEach(function(m,i){
+    var row=el("div","tr-row");
+    var q=el("span",null,LETTERS[i]+". "+m[0]);q.style.flex="1 1 320px";q.style.fontWeight="700";
+    var ans=el("span","ans",m[1]+" ("+m[2]+")");ans.hidden=true;
+    var b=el("button","btn ghost","Show");b.type="button";
+    b.addEventListener("click",function(){ans.hidden=!ans.hidden;b.textContent=ans.hidden?"Show":"Hide"});
+    row.appendChild(q);row.appendChild(b);row.appendChild(ans);box.appendChild(row);
+  });
+}
+
+/* C: how often */
+initGapfill($("#gfFreq"));
+
+/* D: listening true or false */
+var TF=[
+  ["Tom wakes up at 7:00 a.m.",false,"Tom wakes up at 6:30 a.m. Lisa wakes up at 7:00 a.m."],
+  ["Lisa takes the bus to the office.",true,"She does not have a car."],
+  ["Tom has toast and jam for breakfast.",false,"Tom has cereal with milk. Lisa has toast and jam."],
+  ["Tom leaves for work at 8:00 a.m.",true,"Lisa leaves at 8:30 a.m."],
+  ["Tom and Lisa finish work at the same time.",true,"They both finish at 5:00 p.m."],
+  ["Lisa goes to the gym after work.",false,"Tom goes to the gym. Lisa goes home and watches TV."]
+];
+var tfScore=0;
+function updTf(){$("#tfStatus").textContent=tfScore===TF.length?"All correct!":tfScore+" of "+TF.length+" correct"}
+function renderTf(){
+  var ol=$("#tfList");ol.innerHTML="";tfScore=0;
+  TF.forEach(function(it){
+    var li=el("li");li.appendChild(document.createTextNode(it[0]));
+    var opts=el("span","opts"),why=el("span","why",it[2]);why.hidden=true;
+    [["True",true],["False",false]].forEach(function(o){
+      var b=el("button","opt",o[0]);b.type="button";
+      b.addEventListener("click",function(){
+        if(li.classList.contains("done"))return;
+        if(o[1]===it[1]){b.classList.add("ok");li.classList.add("done");why.hidden=false;tfScore++;updTf()}
+        else{b.classList.add("bad");b.disabled=true}
+      });
+      opts.appendChild(b);
+    });
+    li.appendChild(opts);li.appendChild(why);ol.appendChild(li);
+  });
+  updTf();
+}
+$("#tfReset").addEventListener("click",renderTf);
+var QA=[
+  ["What are Tom and Lisa doing in the park?","They are having a conversation about their daily routines."],
+  ["What time does Lisa usually wake up?","At 7:00 a.m."],
+  ["How does Tom usually go to work?","He drives his car."],
+  ["When do Tom and Lisa finish work?","At 5:00 p.m. They finish at the same time."],
+  ["What do they both do in the evening?","They both watch TV. Tom watches later in the evening."]
+];
+function renderQa(){
+  var box=$("#qaList");box.innerHTML="";
+  QA.forEach(function(m,i){
+    var row=el("div","tr-row");
+    var q=el("span",null,LETTERS[i]+". "+m[0]);q.style.flex="1 1 320px";q.style.fontWeight="700";
+    var ans=el("span","ans",m[1]);ans.hidden=true;
+    var b=el("button","btn ghost","Show");b.type="button";
+    b.addEventListener("click",function(){ans.hidden=!ans.hidden;b.textContent=ans.hidden?"Show":"Hide"});
+    row.appendChild(q);row.appendChild(b);row.appendChild(ans);box.appendChild(row);
+  });
+}
+
+/* E: speaking interview */
+var SP=[
+  {t:"Waking up",q:"Do you get up before six in the morning?",f:["Who wakes you up in the morning?","What time do you go to bed at night?","When did you establish this routine?","Where in your home do you start your morning?","Why do you choose to wake up early?","How do you manage to wake up on time?"]},
+  {t:"Breakfast",q:"Do you have breakfast every day?",f:["Who prepares breakfast in your household?","What is your favourite breakfast food?","When do you usually have breakfast?","Where do you typically eat your breakfast?","Why do you think breakfast is important?","How long does it take you to finish your breakfast?"]},
+  {t:"Exercise",q:"Do you exercise regularly?",f:["Who do you exercise with, if anyone?","What type of exercises do you enjoy the most?","When during the day do you usually work out?","Where do you prefer to exercise, indoors or outdoors?","Why did you start your exercise routine?","How do you stay motivated to exercise regularly?"]},
+  {t:"Bedtime",q:"Do you go to bed late at night?",f:["Who do you usually spend your evenings with?","What activities keep you up late at night?","When do you start winding down for bedtime?","Where in your home do you sleep?","Why do you stay up late sometimes?","How does staying up late affect your mornings?"]},
+  {t:"Getting around",q:"Do you take public transportation to school or work?",f:["Who else from your neighbourhood uses the same transportation?","What's the route you take to school or work?","When does your daily commute begin and end?","Where is the nearest bus or train station to your home?","Why do you choose to use public transportation?","How long is your average commute time?"]}
+];
+var spCur=0,spAsked=SP.map(function(){return {}});
+function renderSpeak(){
+  var tabs=$("#spTabs");tabs.innerHTML="";
+  SP.forEach(function(it,i){
+    var b=el("button","tab"+(i===spCur?" cur":""),it.t);b.type="button";
+    b.addEventListener("click",function(){spCur=i;renderSpeak()});tabs.appendChild(b);
+  });
+  $("#spQ").textContent=SP[spCur].q;
+  var ul=$("#spList");ul.innerHTML="";
+  SP[spCur].f.forEach(function(q,i){
+    var li=el("li"),b=el("button",spAsked[spCur][i]?"asked":"",q);b.type="button";
+    b.addEventListener("click",function(){spAsked[spCur][i]=!spAsked[spCur][i];b.classList.toggle("asked",!!spAsked[spCur][i])});
+    li.appendChild(b);ul.appendChild(li);
+  });
+}
+
+/* F: writing */
+var WR={
+  me:{
+    prompt:"Write 50 to 75 words about your daily routine.",
+    model:"I wake up at 6 a.m. every day. First, I wash my face and brush my teeth. Then I have breakfast with my family. After that, I go to school by bus. I finish school at 3 p.m. and go home. In the evening, I do my homework and watch TV. I go to bed at 9 p.m.",
+    items:["I use present simple verbs (wake up, go, have).","I write the times (6 a.m.).","I use first, then, after that.","I write 50 to 75 words."],
+    text:"",checked:[false,false,false,false]
+  },
+  fam:{
+    prompt:"Write 50 to 75 words about the daily routine of a family member.",
+    model:"My mum wakes up at 4:30 a.m. every day. First, she prays and cooks breakfast. Then she cleans the house. After that, she goes to the market. She usually watches TV in the evening. She goes to bed at 9:30 p.m.",
+    items:["I add -s or -es after he or she (wakes, goes).","I write the times (4:30 a.m.).","I use first, then, after that.","I write 50 to 75 words."],
+    text:"",checked:[false,false,false,false]
+  }
+};
+var WR_TABS=[["me","My day"],["fam","A family member"]],wrCur="me",wrShow=false;
+function wcount(t){var m=t.replace(/^\s+|\s+$/g,"");return m?m.split(/\s+/).length:0}
+function drawCount(){
+  var n=wcount($("#wrText").value),c=$("#wrCount");
+  c.textContent=n+" words (goal: 50 to 75)";c.className="wc"+(n>=50&&n<=75?" good":"");
+}
+function renderWrite(){
+  var d=WR[wrCur];
+  var tabs=$("#wrTabs");tabs.innerHTML="";
+  WR_TABS.forEach(function(t){
+    var b=el("button","tab"+(t[0]===wrCur?" cur":""),t[1]);b.type="button";
+    b.addEventListener("click",function(){WR[wrCur].text=$("#wrText").value;wrCur=t[0];renderWrite()});
+    tabs.appendChild(b);
+  });
+  $("#wrPrompt").textContent=d.prompt;
+  $("#wrModel").textContent=d.model;$("#wrModel").hidden=!wrShow;
+  $("#wrModelBtn").textContent=wrShow?"Hide model":"Show model";
+  var words=$("#wrWords");words.innerHTML="";
+  ["first","then","after that","before","finally","every day","in the evening"].forEach(function(w){
+    var b=el("button","chip",w);b.type="button";
+    b.addEventListener("click",function(){
+      var ta=$("#wrText"),v=ta.value;
+      ta.value=v+(v&&!/\s$/.test(v)?" ":"")+w+" ";d.text=ta.value;drawCount();ta.focus();
+    });
+    words.appendChild(b);
+  });
+  $("#wrText").value=d.text;drawCount();
+  var ul=$("#wrCheck");ul.innerHTML="";
+  d.items.forEach(function(t,i){
+    var li=el("li"),b=el("button",d.checked[i]?"on":"",t);b.type="button";
+    b.addEventListener("click",function(){d.checked[i]=!d.checked[i];b.classList.toggle("on",d.checked[i])});
+    li.appendChild(b);ul.appendChild(li);
+  });
+}
+$("#wrModelBtn").addEventListener("click",function(){wrShow=!wrShow;$("#wrModel").hidden=!wrShow;this.textContent=wrShow?"Hide model":"Show model"});
+$("#wrText").addEventListener("input",function(){WR[wrCur].text=this.value;drawCount()});
+
+/* ---------- start ---------- */
+renderWords();renderCircles();initRe();renderTr();renderLists();drawTimer();renderGram();renderMis();renderTf();renderQa();renderSpeak();renderWrite();go(0);
+})();
+</script>
+</body>
+</html>
